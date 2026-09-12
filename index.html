@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Baragath Nasrin | Google Play Store Data Analysis</title>
+
+    <meta name="description"
+        content="Google Play Store Data Analysis project by Baragath Nasrin using Python, Pandas, NumPy, Matplotlib and Power BI.">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #111827;
+            padding: 16px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #60a5fa;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 20px;
+            background: linear-gradient(135deg, #111827, #1d4ed8);
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 950px;
+        }
+
+        .profile-label {
+            display: inline-block;
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 30px;
+            margin-bottom: 22px;
+            font-size: 14px;
+            color: #dbeafe;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .hero h2 {
+            font-size: 25px;
+            font-weight: normal;
+            color: #dbeafe;
+            margin-bottom: 22px;
+        }
+
+        .hero p {
+            max-width: 780px;
+            margin: auto;
+            font-size: 18px;
+            color: #e5e7eb;
+        }
+
+        .buttons {
+            margin-top: 32px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 25px;
+            margin: 6px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1d4ed8;
+        }
+
+        .btn-secondary {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ================= GENERAL ================= */
+
+        section {
+            padding: 75px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 35px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+        }
+
+        /* ================= ABOUT ME ================= */
+
+        .about-me {
+            max-width: 950px;
+            margin: auto;
+            background: white;
+            padding: 38px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+        }
+
+        .about-me h3 {
+            color: #2563eb;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .about-me p {
+            color: #4b5563;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        /* ================= PROJECT OVERVIEW ================= */
+
+        .overview {
+            max-width: 950px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .overview p {
+            color: #4b5563;
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            color: #2563eb;
+        }
+
+        .card p {
+            color: #555;
+        }
+
+        /* ================= OBJECTIVES ================= */
+
+        .objective-list {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .objective-list li {
+            background: white;
+            margin: 13px 0;
+            padding: 17px 22px;
+            border-left: 5px solid #2563eb;
+            border-radius: 7px;
+            list-style: none;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        /* ================= TECHNOLOGY ================= */
+
+        .technology {
+            background: #eef2ff;
+        }
+
+        .tech-box {
+            text-align: center;
+            padding: 22px;
+            background: white;
+            border-radius: 12px;
+            font-weight: bold;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        /* ================= WORKFLOW ================= */
+
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .step {
+            background: white;
+            padding: 25px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            margin: auto auto 15px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* ================= DASHBOARD ================= */
+
+        .dashboard {
+            background: #111827;
+            color: white;
+        }
+
+        .dashboard .section-title h2 {
+            color: white;
+        }
+
+        .dashboard .section-title p {
+            color: #d1d5db;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 28px;
+        }
+
+        .gallery-card {
+            background: #1f2937;
+            padding: 15px;
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 9px;
+            background: #374151;
+        }
+
+        .gallery-card h3 {
+            margin-top: 15px;
+            margin-bottom: 6px;
+            color: white;
+        }
+
+        .gallery-card p {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        /* ================= INSIGHTS ================= */
+
+        .insights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+        }
+
+        .insight {
+            background: white;
+            padding: 27px;
+            border-radius: 12px;
+            border-top: 4px solid #2563eb;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .insight h3 {
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .insight p {
+            color: #555;
+        }
+
+        /* ================= DATASET ================= */
+
+        .dataset-section {
+            background: #f9fafb;
+        }
+
+        /* ================= PROJECT FILES ================= */
+
+        .files {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 19px 23px;
+            margin: 13px 0;
+            border-radius: 9px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .file-item a {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= INTERNSHIP ================= */
+
+        .internship {
+            background: #eef2ff;
+        }
+
+        .internship-box {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .internship-box h3 {
+            color: #2563eb;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .internship-box p {
+            color: #555;
+            margin: 8px 0;
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact {
+            text-align: center;
+            background: #111827;
+            color: white;
+        }
+
+        .contact .section-title h2 {
+            color: white;
+        }
+
+        .contact .section-title p {
+            color: #d1d5db;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            max-width: 850px;
+            margin: auto;
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: #1f2937;
+            padding: 22px;
+            border-radius: 10px;
+        }
+
+        .contact-card h3 {
+            color: #93c5fd;
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            color: #e5e7eb;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            background: #030712;
+            color: #9ca3af;
+            padding: 28px 20px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 768px) {
+
+            nav {
+                flex-direction: column;
+                gap: 13px;
+            }
+
+            nav ul {
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero h2 {
+                font-size: 20px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 55px 5%;
+            }
+
+            .section-title h2 {
+                font-size: 29px;
+            }
+
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+    <div class="logo">
+        Baragath Nasrin
+    </div>
+
+    <ul>
+
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#project">Project</a></li>
+        <li><a href="#objectives">Objectives</a></li>
+        <li><a href="#technology">Tools</a></li>
+        <li><a href="#workflow">Process</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#insights">Insights</a></li>
+        <li><a href="#files">Files</a></li>
+
+    </ul>
+
+</nav>
+
+<!-- ================= HERO ================= -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="profile-label">
+            Data Analytics Intern | ElevanceSkills
+        </div>
+
+        <h1>
+            Google Play Store<br>
+            Data Analysis
+        </h1>
+
+        <h2>
+            Python • Data Analytics • Power BI
+        </h2>
+
+        <p>
+            An end-to-end data analytics project focused on exploring
+            Google Play Store application data, identifying patterns,
+            analyzing application performance and presenting insights
+            through visualizations and dashboards.
+        </p>
+
+        <div class="buttons">
+
+            <a class="btn btn-primary" href="#dashboard">
+                View Dashboard
+            </a>
+
+            <a class="btn btn-secondary" href="#files">
+                View Project Files
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- ================= ABOUT ME ================= -->
+
+<section id="about">
+
+    <div class="section-title">
+
+        <h2>About Me</h2>
+
+        <p>Data Analytics Professional Profile</p>
+
+    </div>
+
+    <div class="about-me">
+
+        <h3>Hi, I'm Baragath Nasrin</h3>
+
+        <p>
+            I am an aspiring Data Analyst with an interest in
+            transforming raw data into meaningful insights that
+            support better decision-making.
+        </p>
+
+        <p>
+            I have developed practical skills in
+            <strong>SQL, Python, Power BI and Advanced Excel</strong>
+            through data analytics training and project-based learning.
+        </p>
+
+        <p>
+            This website presents my Google Play Store Data Analysis
+            project completed as part of my Data Analytics internship
+            with <strong>ElevanceSkills</strong>.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================= PROJECT ================= -->
+
+<section id="project">
+
+    <div class="section-title">
+
+        <h2>About the Project</h2>
+
+        <p>Google Play Store Data Analysis</p>
+
+    </div>
+
+    <div class="overview">
+
+        <p>
+            The project focuses on analyzing Google Play Store
+            application data to understand application categories,
+            ratings, reviews, installations, size, pricing and
+            other application attributes.
+        </p>
+
+        <p>
+            Python was used for data cleaning, preprocessing,
+            exploratory data analysis and visualization.
+            Power BI was used to present analytical findings
+            through interactive visualizations.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================= OBJECTIVES ================= -->
+
+<section id="objectives">
+
+    <div class="section-title">
+
+        <h2>Project Objectives</h2>
+
+        <p>Key questions addressed during the analysis</p>
+
+    </div>
+
+    <div class="objective-list">
+
+        <li>
+            Identify application categories with the highest
+            number of installations.
+        </li>
+
+        <li>
+            Analyze application rating patterns.
+        </li>
+
+        <li>
+            Study installation trends over time.
+        </li>
+
+        <li>
+            Analyze the relationship between installations
+            and user reviews.
+        </li>
+
+        <li>
+            Compare ratings, reviews, application size and
+            installations to understand application performance.
+        </li>
+
+        <li>
+            Create visualizations to communicate important
+            patterns and analytical findings.
+        </li>
+
+    </div>
+
+</section>
+
+<!-- ================= TOOLS ================= -->
+
+<section id="technology" class="technology">
+
+    <div class="section-title">
+
+        <h2>Tools & Technologies</h2>
+
+        <p>Technologies used during the project</p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="tech-box">Python</div>
+        <div class="tech-box">Pandas</div>
+        <div class="tech-box">NumPy</div>
+        <div class="tech-box">Matplotlib</div>
+        <div class="tech-box">Jupyter Notebook</div>
+        <div class="tech-box">Power BI</div>
+        <div class="tech-box">DAX</div>
+        <div class="tech-box">GitHub</div>
+
+    </div>
+
+</section>
+
+<!-- ================= WORKFLOW ================= -->
+
+<section id="workflow">
+
+    <div class="section-title">
+
+        <h2>Project Workflow</h2>
+
+        <p>End-to-end data analytics process</p>
+
+    </div>
+
+    <div class="workflow">
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Data Collection</h3>
+            <p>Google Play Store application data was used for the analysis.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Data Cleaning</h3>
+            <p>Missing values, duplicates and inconsistent data were handled.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Preprocessing</h3>
+            <p>Data types were transformed and analytical features were created.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">4</div>
+            <h3>EDA</h3>
+            <p>Trends and relationships were explored using Python.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">5</div>
+            <h3>Visualization</h3>
+            <p>Charts and Power BI visuals were developed to communicate findings.</p>
+        </div>
+
+        <div class="step">
+            <div class="step-number">6</div>
+            <h3>Insights</h3>
+            <p>Important patterns were identified and documented.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard" class="dashboard">
+
+    <div class="section-title">
+
+        <h2>Power BI Visualizations</h2>
+
+        <p>
+            Visual analysis of Google Play Store application data
+        </p>
+
+    </div>
+
+    <div class="gallery">
+
+        <div class="gallery-card">
+
+            <img
+                src="images/time-series-line-chart.png"
+                alt="Time Series Line Chart"
+            >
+
+            <h3>Time Series Line Chart</h3>
+
+            <p>
+                Shows installation trends and changes over time.
+            </p>
+
+        </div>
+
+        <div class="gallery-card">
+
+            <img
+                src="images/stacked-area-chart.png"
+                alt="Stacked Area Chart"
+            >
+
+            <h3>Stacked Area Chart</h3>
+
+            <p>
+                Compares application category trends across time.
+            </p>
+
+        </div>
+
+        <div class="gallery-card">
+
+            <img
+                src="images/grouped-bar-chart.png"
+                alt="Grouped Bar Chart"
+            >
+
+            <h3>Grouped Bar Chart</h3>
+
+            <p>
+                Compares application performance across selected categories.
+            </p>
+
+        </div>
+
+        <div class="gallery-card">
+
+            <img
+                src="images/bubble-chart.png"
+                alt="Bubble Chart"
+            >
+
+            <h3>Bubble Chart</h3>
+
+            <p>
+                Examines relationships between ratings, reviews and installations.
+            </p>
+
+        </div>
+
+        <div class="gallery-card">
+
+            <img
+                src="images/dual-axis-chart.png"
+                alt="Dual Axis Chart"
+            >
+
+            <h3>Dual-Axis Chart</h3>
+
+            <p>
+                Compares two related measures within a single visualization.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+
+<section id="insights">
+
+    <div class="section-title">
+
+        <h2>Key Insights</h2>
+
+        <p>Main observations from the analysis</p>
+
+    </div>
+
+    <div class="insights">
+
+        <div class="insight">
+
+            <h3>Top Categories</h3>
+
+            <p>
+                Categories with a high number of installations
+                indicate stronger user demand and popularity.
+            </p>
+
+        </div>
+
+        <div class="insight">
+
+            <h3>Rating Patterns</h3>
+
+            <p>
+                Application ratings are concentrated mainly
+                around the higher rating range.
+            </p>
+
+        </div>
+
+        <div class="insight">
+
+            <h3>Installation Trends</h3>
+
+            <p>
+                Installation data can be analyzed over time
+                to identify changes in application popularity.
+            </p>
+
+        </div>
+
+        <div class="insight">
+
+            <h3>Review Patterns</h3>
+
+            <p>
+                Applications with higher installations generally
+                receive a greater number of user reviews.
+            </p>
+
+        </div>
+
+        <div class="insight">
+
+            <h3>Application Performance</h3>
+
+            <p>
+                Ratings, reviews, size and installations provide
+                useful indicators for comparing applications.
+            </p>
+
+        </div>
+
+        <div class="insight">
+
+            <h3>Data-Driven Decisions</h3>
+
+            <p>
+                Visualizations make it easier to compare categories,
+                identify trends and communicate analytical findings.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= DATASET ================= -->
+
+<section class="dataset-section">
+
+    <div class="section-title">
+
+        <h2>Dataset</h2>
+
+        <p>Google Play Store application data</p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Application Information</h3>
+
+            <p>
+                App name, category, rating, reviews,
+                size, installations and pricing information.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>User Engagement</h3>
+
+            <p>
+                Reviews and installation-related fields
+                were analyzed to understand application popularity.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Application Details</h3>
+
+            <p>
+                Content rating, genres, Android version,
+                current version and last updated information.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= INTERNSHIP ================= -->
+
+<section class="internship">
+
+    <div class="section-title">
+
+        <h2>Internship</h2>
+
+        <p>Professional project experience</p>
+
+    </div>
+
+    <div class="internship-box">
+
+        <h3>ElevanceSkills</h3>
+
+        <p>
+            <strong>Role:</strong>
+            Data Analytics Intern
+        </p>
+
+        <p>
+            <strong>Project:</strong>
+            Google Play Store Data Analysis
+        </p>
+
+        <p>
+            <strong>Domain:</strong>
+            Data Analytics
+        </p>
+
+        <p>
+            <strong>Primary Tools:</strong>
+            Python & Power BI
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================= PROJECT FILES ================= -->
+
+<section id="files">
+
+    <div class="section-title">
+
+        <h2>Project Files</h2>
+
+        <p>
+            Source files, documentation and project resources
+        </p>
+
+    </div>
+
+    <div class="files">
+
+        <!-- JUPYTER NOTEBOOK -->
+
+        <div class="file-item">
+
+            <span>
+                Google Play Store Project Notebook
+            </span>
+
+            <a
+                href="https://github.com/Nasrin966/google-play-store-data-analysis/blob/main/Google%20Play%20Store%20Project%20%281%29.ipynb"
+                target="_blank"
+            >
+                View
+            </a>
+
+        </div>
+
+        <!-- CLEANED DATASET -->
+
+        <div class="file-item">
+
+            <span>
+                Cleaned Application Dataset
+            </span>
+
+            <a
+                href="https://github.com/Nasrin966/google-play-store-data-analysis/blob/main/Googleplaystore_app_cleaned.csv"
+                target="_blank"
+            >
+                View Dataset
+            </a>
+
+        </div>
+
+        <!-- README -->
+
+        <div class="file-item">
+
+            <span>
+                Project README
+            </span>
+
+            <a
+                href="https://github.com/Nasrin966/google-play-store-data-analysis/blob/main/README.md"
+                target="_blank"
+            >
+                View
+            </a>
+
+        </div>
+
+        <!-- GITHUB -->
+
+        <div class="file-item">
+
+            <span>
+                GitHub Repository
+            </span>
+
+            <a
+                href="https://github.com/Nasrin966/google-play-store-data-analysis"
+                target="_blank"
+            >
+                View GitHub
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= PROJECT INFORMATION ================= -->
+
+<section class="contact">
+
+    <div class="section-title">
+
+        <h2>Project Information</h2>
+
+        <p>
+            Data Analytics Internship Portfolio
+        </p>
+
+    </div>
+
+    <div class="contact-info">
+
+        <div class="contact-card">
+
+            <h3>Analyst</h3>
+
+            <p>
+                Baragath Nasrin
+            </p>
+
+        </div>
+
+        <div class="contact-card">
+
+            <h3>Project</h3>
+
+            <p>
+                Google Play Store Data Analysis
+            </p>
+
+        </div>
+
+        <div class="contact-card">
+
+            <h3>Internship</h3>
+
+            <p>
+                ElevanceSkills
+            </p>
+
+        </div>
+
+        <div class="contact-card">
+
+            <h3>Domain</h3>
+
+            <p>
+                Data Analytics
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026
+        <strong>Baragath Nasrin</strong>
+        | Google Play Store Data Analysis
+    </p>
+
+    <p>
+        Data Analytics Internship Project
+    </p>
+
+</footer>
+
+</body>
+
+</html>
